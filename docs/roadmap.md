@@ -3,3 +3,6 @@
   - [ ] Display branch name during rebase
 - [ ] Fix untracked displaying only two characters
 - [ ] fix branch display on new repo
+- [ ] configuration file
+  - [ ] custom status characters
+  - [ ] demote nerdfont icons from default

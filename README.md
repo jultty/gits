@@ -2,11 +2,9 @@
 
 A cleaner and friendlier alternative to `git status`.
 
-`gits` provides an output similar to `git status --porcelain`, but with branch information by default, less cryptic messages for yet untracked or mid-rebase statuses and colored output.
+`gits` provides an output similar to `git status --porcelain`, but with less cryptic messages for yet untracked or mid-rebase statuses, branch information by default, colored output and icons.
 
-While gits' porcelain commands are explicitly _meant_ to change and not be used for scripting, note that this tool does not and will not perform any writing operations. Rather, it only reads and parses the output from `git status --porcelain --branch`. Any other calls it makes to git are also read-only and seek information that git does not provide in its porcelain status during certain occasions.
-
-The output, as in `git status --porcelain`, uses certain characters to represent the status of files:.
+The output, as in `git status --porcelain`, uses certain characters to represent the status of files:
 
 ```
 ? = untracked
@@ -18,6 +16,8 @@ U = updated but unmerged
 ```
 
 See `git status --help`for an extensive list of other such characters and the possible combinations across both columns.
+
+While Git's porcelain commands are supposed to change and not be used for scripting, this tool does not and will not perform any writing operations. Rather, it only reads and parses the output from `git status --porcelain 1 --branch`. Any other calls it makes to git are also read-only.
 
 ## Development
 
