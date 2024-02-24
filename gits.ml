@@ -28,7 +28,8 @@ let read_string ch = let res = Buffer.create 1024 in
 let get_dir p = if !p <> "" then !p else getcwd ()
 
 let get_status d = begin
-  let ic = open_process_args_in "git" [|"git"; "-C"; d; "status"; "-sb"; |] in
+  let ic = open_process_args_in "git"
+    [|"git"; "-C"; d; "status"; "--porcelain=1"; "--branch"; |] in
   let list = String.split_on_char '\n' (read_string ic) in
   let list = List.filter (fun e -> String.trim e <> "" && e <> "\n") list in
   list
@@ -191,13 +192,11 @@ let get_branch d = begin
 end
 
 (* arg parsing *)
-let usage_msg = "gits [-w] [-p <path>]"
-let walk = ref false
+let usage_msg = "gits [-p <path>]"
 let path = ref ""
 let others = ref []
 let anon_fun other = others := other::!others
 let speclist = [
-  ("-w", Arg.Set walk, "Walk through dotfile directories");
   ("-p", Arg.Set_string path, "Git repository path")
   ] ;;
 
@@ -205,10 +204,6 @@ Arg.parse speclist anon_fun usage_msg
 
 (* entry point *)
 let main = begin
-  if !walk then begin
-    run("gw") ;
-    exit 0 ;
-  end ;
   let dir = (get_dir path) in
   if is_repo dir then begin
     run "echo" ;
