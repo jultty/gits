@@ -1,0 +1,5 @@
+- [x] Handle rebase
+  - [ ] Improve rebase detection
+  - [ ] Display branch name during rebase
+- [ ] Fix untracked displaying only two characters
+- [ ] fix branch display on new repo

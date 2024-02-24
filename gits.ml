@@ -1,6 +1,9 @@
 open Unix ;;
 open Sys ;;
 
+(* constants *)
+let rebase_status = "## rebasing...rebasing"
+
 (* io/system *)
 let print s = print_endline s
 let i x = ignore x
@@ -106,9 +109,16 @@ let get_branch_status s remote_end = begin
 end
 
 let handle_empty s d = begin
-  let branch = get_plumbing_branch d in
-  if String.trim s = "## main" then "## " ^ branch ^ "...untracked"
-  else if (String.sub s 0 20) = "## No commits yet on" then "## " ^ branch ^ "...uncommitted"
+  if s <> rebase_status then begin
+    let branch = get_plumbing_branch d in
+    if String.trim s = "## main" then "## " ^ branch ^ "...untracked"
+    else if (String.sub s 0 20) = "## No commits yet on" then "## " ^ branch ^ "...uncommitted"
+    else s
+  end else s
+end
+
+let handle_rebase s d = begin
+  if String.trim s = "## HEAD (no branch)" then rebase_status
   else s
 end
 
@@ -173,6 +183,7 @@ end
 let get_branch d = begin
   let status = get_status d in
   let branch_line = List.hd status in
+  let branch_line = handle_rebase branch_line d in
   let branch_line = handle_empty branch_line d in
   let branch_line = assemble_branch_status branch_line in
   let branch_line = add_branch_icons branch_line in

@@ -1,6 +1,0 @@
-- [ ] Incorporate gw
-- [ ] Fix untracked displaying only two characters
-Usage: nvimpager [-acp] [--] [nvim options and files]
-       nvimpager -h
-       nvimpager -v
-- [ ] fix branch display on new repo
